@@ -37,7 +37,7 @@ func (h *MailHandlerImpl) SendConfirmationEmail(ctx context.Context, req *mailv1
 		return nil, err
 	}
 
-	err := h.svc.SendConfirmationEmail(ctx, req.Email, req.OtpCode)
+	err := h.svc.SendOtpCode(ctx, req.Email, req.OtpCode)
 	if err != nil {
 		return &mailv1.SendResponse{
 			IsSuccess: false,
@@ -55,7 +55,7 @@ func (h *MailHandlerImpl) SendPasswordReset(ctx context.Context, req *mailv1.Sen
 		return nil, err
 	}
 
-	err := h.svc.SendPasswordResetEmail(ctx, req.Email, req.OtpCode)
+	err := h.svc.SendOtpCode(ctx, req.Email, req.OtpCode)
 	if err != nil {
 		return &mailv1.SendResponse{
 			IsSuccess: false,

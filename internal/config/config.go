@@ -24,6 +24,7 @@ type (
 		App  App  `yaml:"app"`
 		HTTP HTTP `yaml:"http"`
 		GRPC GRPC `yaml:"grpc"`
+		Mail Mail `yaml:"mail"`
 		Log  Log  `yaml:"log"`
 	}
 
@@ -44,6 +45,14 @@ type (
 	GRPC struct {
 		Port    int           `env-required:"true" yaml:"port"`
 		Timeout time.Duration `env-required:"true" yaml:"timeout"`
+	}
+
+	// Mail contains all the environment variables for the mail client
+	Mail struct {
+		Host     string `env-required:"true" yaml:"host"     env:"MAIL_HOST"`
+		Port     int    `env-required:"true" yaml:"port"     env:"MAIL_PORT"`
+		Username string `env-required:"true" yaml:"username" env:"MAIL_USERNAME"`
+		Password string `env-required:"true" yaml:"password" env:"MAIL_PASSWORD"`
 	}
 
 	// Logger settings

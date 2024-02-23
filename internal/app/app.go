@@ -45,7 +45,7 @@ func Run(configPath string) {
 	log.Debug("debug messages are enabled")
 
 	// Dependency injection
-	mailService := mailService.NewMailService(log)
+	mailService := mailService.NewMailService(log, &cfg.Mail)
 	mailHandler := http.NewMailHandler(mailService)
 
 	// Init router

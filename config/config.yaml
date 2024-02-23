@@ -22,3 +22,9 @@ log:
       fields_format: "json"
       emoji: true
       # time_layout: "15:04:05.000000"
+
+mail:
+  host: smtp.mail.ru
+  port: 587
+  username: user@mail.ru
+  password: pass
