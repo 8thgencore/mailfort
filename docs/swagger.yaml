@@ -1,0 +1,116 @@
+basePath: /v1
+definitions:
+  http.sendEmailWithOTPCodeRequest:
+    properties:
+      email:
+        example: user@example.com
+        type: string
+      otp_code:
+        example: "123456"
+        type: string
+    required:
+    - email
+    - otp_code
+    type: object
+  response.ErrorResponse:
+    properties:
+      messages:
+        example:
+        - Error message 1
+        - ' Error message 2'
+        items:
+          type: string
+        type: array
+      success:
+        example: false
+        type: boolean
+    type: object
+  response.Response:
+    properties:
+      data: {}
+      message:
+        example: Success
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+host: api.example.com
+info:
+  contact:
+    email: test@gmail.com
+    name: Tom Jerry
+    url: https://github.com/8thgencore/mailfort
+  description: MailFort API is a service for handling email-related operations.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  title: MailFort API
+  version: "1.0"
+paths:
+  /send-confirmation-email:
+    post:
+      consumes:
+      - application/json
+      description: Processes a request to generate and send an email with a confirmation
+        code.
+      parameters:
+      - description: Request body for sending confirmation email
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/http.sendEmailWithOTPCodeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success response
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Validation error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Send Confirmation Email
+      tags:
+      - Mail
+  /send-password-reset-email:
+    post:
+      consumes:
+      - application/json
+      description: Processes a request to generate and send an email with a password
+        reset code.
+      parameters:
+      - description: Request body for sending password reset email
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/http.sendEmailWithOTPCodeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success response
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Validation error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Send Password Reset Email
+      tags:
+      - Mail
+schemes:
+- http
+- https
+swagger: "2.0"
