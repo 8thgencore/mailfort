@@ -23,7 +23,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/send-confirmation-email": {
+        "/email-confirmation": {
             "post": {
                 "description": "Processes a request to generate and send an email with a confirmation code.",
                 "consumes": [
@@ -69,7 +69,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/send-password-reset-email": {
+        "/password-reset": {
             "post": {
                 "description": "Processes a request to generate and send an email with a password reset code.",
                 "consumes": [

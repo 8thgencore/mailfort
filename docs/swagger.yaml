@@ -48,7 +48,7 @@ info:
   title: MailFort API
   version: "1.0"
 paths:
-  /send-confirmation-email:
+  /email-confirmation:
     post:
       consumes:
       - application/json
@@ -79,7 +79,7 @@ paths:
       summary: Send Confirmation Email
       tags:
       - Mail
-  /send-password-reset-email:
+  /password-reset:
     post:
       consumes:
       - application/json
