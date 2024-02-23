@@ -35,7 +35,7 @@ type sendEmailWithOTPCodeRequest struct {
 //	@Success		200		{object}	response.Response			"Success response"
 //	@Failure		400		{object}	response.ErrorResponse		"Validation error"
 //	@Failure		500		{object}	response.ErrorResponse		"Internal server error"
-//	@Router			/send-confirmation-email [post]
+//	@Router			/email-confirmation [post]
 func (h *MailHandler) SendConfirmationEmail(ctx *gin.Context) {
 	var req sendEmailWithOTPCodeRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
@@ -63,7 +63,7 @@ func (h *MailHandler) SendConfirmationEmail(ctx *gin.Context) {
 //	@Success		200		{object}	response.Response			"Success response"
 //	@Failure		400		{object}	response.ErrorResponse		"Validation error"
 //	@Failure		500		{object}	response.ErrorResponse		"Internal server error"
-//	@Router			/send-password-reset-email [post]
+//	@Router			/password-reset [post]
 func (h *MailHandler) SendPasswordReset(ctx *gin.Context) {
 	var req sendEmailWithOTPCodeRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log/slog"
 	"path"
+	"time"
 
 	"github.com/8thgencore/mailfort/pkg/logger/slogpretty"
 	"github.com/ilyakaznacheev/cleanenv"
@@ -19,10 +20,11 @@ const (
 
 type (
 	Config struct {
-		Env      Env      `yaml:"env" env-defaul:"local" env-required:"true"` // local, dev or prod
-		App      App      `yaml:"app"`
-		HTTP     HTTP     `yaml:"http"`
-		Log      Log      `yaml:"log"`
+		Env  Env  `yaml:"env" env-defaul:"local" env-required:"true"` // local, dev or prod
+		App  App  `yaml:"app"`
+		HTTP HTTP `yaml:"http"`
+		GRPC GRPC `yaml:"grpc"`
+		Log  Log  `yaml:"log"`
 	}
 
 	// App contains all the environment variables for the application
@@ -38,6 +40,11 @@ type (
 		AllowOrigins string `env-required:"true" yaml:"allow_origins"`
 	}
 
+	// GRPC contains all the environment variables for the gRPC server
+	GRPC struct {
+		Port    int           `env-required:"true" yaml:"port"`
+		Timeout time.Duration `env-required:"true" yaml:"timeout"`
+	}
 
 	// Logger settings
 	Log struct {

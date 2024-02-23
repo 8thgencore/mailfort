@@ -9,6 +9,10 @@ http:
   port: 8080
   allow_origins: "*" # Example: 127.0.0.1, example.com
 
+grpc:
+  port: 44044
+  timeout: 10h
+
 log:
   slog:
     add_source: true

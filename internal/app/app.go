@@ -5,8 +5,11 @@ import (
 	"log"
 	"log/slog"
 	"os"
+	"os/signal"
+	"syscall"
 
 	_ "github.com/8thgencore/mailfort/docs"
+	"github.com/8thgencore/mailfort/internal/app/grpc"
 	"github.com/8thgencore/mailfort/internal/config"
 	"github.com/8thgencore/mailfort/internal/delivery/http"
 	mailService "github.com/8thgencore/mailfort/internal/service/mail"
@@ -52,16 +55,34 @@ func Run(configPath string) {
 		os.Exit(1)
 	}
 
-	// Start server
+	// Start REST API server
 	listenAddr := fmt.Sprintf("%s:%s", cfg.HTTP.Host, cfg.HTTP.Port)
 
 	log.Info("Starting the HTTP server", "listen_address", listenAddr)
 
-	err = router.Serve(listenAddr)
-	if err != nil {
-		log.Error("Error starting the HTTP server", "error", err.Error())
-		os.Exit(1)
-	}
+	go func() {
+		err = router.Serve(listenAddr)
+		if err != nil {
+			log.Error("Error starting the HTTP server", "error", err.Error())
+			os.Exit(1)
+		}
+	}()
+
+	// Start gRPC API Server
+	grpcApp := grpc.New(log, mailService, cfg.GRPC.Port)
+
+	go grpcApp.MustRun()
+
+	// Graceful shutdown
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, syscall.SIGTERM, syscall.SIGINT)
+	sign := <-stop
+
+	log.Info("stopping application", slog.String("signal", sign.String()))
+
+	grpcApp.Stop()
+
+	log.Info("application stopped")
 }
 
 func newSlogLogger(c config.Slog) *slog.Logger {
