@@ -52,7 +52,7 @@ func (h *MailHandler) SendConfirmationEmail(ctx *gin.Context) {
 	response.HandleSuccess(ctx, nil)
 }
 
-// SendPasswordResetEmail processes a request to generate and send an email with a password reset code.
+// SendPasswordReset processes a request to generate and send an email with a password reset code.
 //
 //	@Summary		Send Password Reset Email
 //	@Description	Processes a request to generate and send an email with a password reset code.
@@ -64,7 +64,7 @@ func (h *MailHandler) SendConfirmationEmail(ctx *gin.Context) {
 //	@Failure		400		{object}	response.ErrorResponse		"Validation error"
 //	@Failure		500		{object}	response.ErrorResponse		"Internal server error"
 //	@Router			/send-password-reset-email [post]
-func (h *MailHandler) SendPasswordResetEmail(ctx *gin.Context) {
+func (h *MailHandler) SendPasswordReset(ctx *gin.Context) {
 	var req sendEmailWithOTPCodeRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		response.ValidationError(ctx, err)

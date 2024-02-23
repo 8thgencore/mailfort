@@ -44,7 +44,7 @@ func NewRouter(
 	v1 := router.Group("/v1")
 	{
 		v1.POST("/email-confirmation", mailHandler.SendConfirmationEmail)
-		v1.POST("/password-reset", mailHandler.SendPasswordResetEmail)
+		v1.POST("/password-reset", mailHandler.SendPasswordReset)
 	}
 
 	return &Router{
