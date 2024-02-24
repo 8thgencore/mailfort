@@ -23,6 +23,7 @@ tmp/
 # exclude Docker files
 Dockerfile*
 docker-compose*.yml
+docker-compose*.yaml
 
 # exclude any development-specific files
 **/*_test.go

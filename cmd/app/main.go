@@ -1,9 +1,17 @@
 package main
 
-import "github.com/8thgencore/mailfort/internal/app"
+import (
+	"log"
+	"os"
 
-const configPath = "./config/config.yaml"
+	"github.com/8thgencore/mailfort/internal/app"
+)
 
 func main() {
+	configPath := os.Getenv("CONFIG_PATH")
+	if configPath == "" {
+		log.Fatal("CONFIG_PATH is not set")
+	}
+
 	app.Run(configPath)
 }

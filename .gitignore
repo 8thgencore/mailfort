@@ -31,3 +31,6 @@ tmp/
 *.log
 *.out
 *.test
+
+# exclude prod yaml
+prod.yaml

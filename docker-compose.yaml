@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  mailfort:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8350:8080"
+    restart: unless-stopped
+    environment:
+      - CONFIG_PATH=./config/prod.yaml
