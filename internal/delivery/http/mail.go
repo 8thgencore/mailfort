@@ -43,7 +43,7 @@ func (h *MailHandler) SendConfirmationEmail(ctx *gin.Context) {
 		return
 	}
 
-	err := h.svc.SendOtpCode(ctx, req.Email, req.OTPCode)
+	err := h.svc.SendConfirmationEmail(ctx, req.Email, req.OTPCode)
 	if err != nil {
 		response.HandleError(ctx, err)
 		return
@@ -71,7 +71,7 @@ func (h *MailHandler) SendPasswordReset(ctx *gin.Context) {
 		return
 	}
 
-	err := h.svc.SendOtpCode(ctx, req.Email, req.OTPCode)
+	err := h.svc.SendPasswordReset(ctx, req.Email, req.OTPCode)
 	if err != nil {
 		response.HandleError(ctx, err)
 		return

@@ -3,35 +3,58 @@ package mail
 import (
 	"context"
 	"crypto/tls"
+	"fmt"
+	"log/slog"
 	"time"
 
+	"github.com/8thgencore/mailfort/internal/config"
+	"github.com/8thgencore/mailfort/internal/domain"
 	mail "github.com/xhit/go-simple-mail/v2"
 )
 
-const htmlBody = `<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Hello Gophers!</title>
-	</head>
-	<body>
-		<p>This is the <b>Go gopher</b>.</p>
-		<p><img src="cid:Gopher.png" alt="Go gopher" /></p>
-		<p>Image created by Renee French</p>
-	</body>
-</html>`
+type messageType string
 
-// SendOtpCode реализует метод интерфейса MailService для отправки письма с кодом подтверждения.
-func (s *MailService) SendOtpCode(ctx context.Context, email, code string) error {
+var (
+	registrationType  messageType = "registration"
+	resetPasswordType messageType = "reset_password"
+)
 
-	s.log.Info("Sending confirmation email to %s with code %s", email, code)
+// SendConfirmationEmail реализует метод интерфейса MailService для отправки письма с кодом подтверждения.
+func (s *MailService) SendConfirmationEmail(ctx context.Context, emailTo, code string) error {
 
+	s.log.Info(fmt.Sprintf("Sending confirmation email to %s with code %s", emailTo, code))
+
+	if err := sendMail(*s.log, *s.cfg, emailTo, code, registrationType); err != nil {
+		return domain.ErrConflictingData
+	}
+
+	s.log.Info("Email Sent")
+
+	return nil
+}
+
+// SendPasswordReset реализует метод интерфейса MailService для отправки письма с кодом подтверждения.
+func (s *MailService) SendPasswordReset(ctx context.Context, emailTo, code string) error {
+
+	s.log.Info(fmt.Sprintf("Sending confirmation email to %s with code %s", emailTo, code))
+
+	if err := sendMail(*s.log, *s.cfg, emailTo, code, resetPasswordType); err != nil {
+		return domain.ErrConflictingData
+	}
+
+	s.log.Info("Email Sent")
+
+	return nil
+}
+
+func sendMail(log slog.Logger, cfg config.Mail, emailTo, code string, messageType messageType) error {
 	server := mail.NewSMTPClient()
 
 	// SMTP Server
-	server.Host = s.cfg.Host
-	server.Port = s.cfg.Port
-	server.Username = s.cfg.Username
-	server.Password = s.cfg.Password
+	server.Host = cfg.Host
+	server.Port = cfg.Port
+	server.Username = cfg.Username
+	server.Password = cfg.Password
 	server.Encryption = mail.EncryptionSTARTTLS
 
 	// Variable to keep alive connection
@@ -51,35 +74,64 @@ func (s *MailService) SendOtpCode(ctx context.Context, email, code string) error
 	smtpClient, err := server.Connect()
 
 	if err != nil {
-		s.log.Error("Error to connect SMTP server", "error", err.Error())
+		log.Error("Error to connect SMTP server", "error", err.Error())
 		return err
 	}
 
 	// New email simple html with inline and CC
 	message := mail.NewMSG()
-	message.SetFrom("From Example <nube@example.com>").
-		AddTo(s.cfg.Username).
-		AddCc(email).
-		SetSubject("New Go message").
-		SetListUnsubscribe("<mailto:unsubscribe@example.com?subject=https://example.com/unsubscribe>")
+	message.SetFrom(cfg.Username).
+		AddTo(emailTo).
+		SetSubject("Confirm OTP code")
 
-	message.SetBody(mail.TextHTML, htmlBody)
+	switch messageType {
+	case registrationType:
+		message.SetBody(mail.TextHTML, fmt.Sprintf(htmlBodyForRegistration, code))
+	case resetPasswordType:
+		message.SetBody(mail.TextHTML, fmt.Sprintf(htmlBodyForPasswordReset, code))
+	}
 
 	// always check error after send
 	if message.Error != nil {
-		s.log.Error("Message have error", "error", message.Error)
+		log.Error("Message have error", "error", message.Error)
 		return err
-
 	}
 
 	// Call Send and pass the client
 	err = message.Send(smtpClient)
 	if err != nil {
-		s.log.Error("Error sending message", "error", err)
+		log.Error("Error sending message", "error", err)
 		return err
 	}
 
-	s.log.Info("Email Sent")
-
 	return nil
 }
+
+const htmlBodyForRegistration = `<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Registration OTP Code</title>
+	</head>
+	<body>
+		<h1>Registration OTP Code</h1>
+		<p>Thank you for registering with us!</p>
+		<p>Your OTP code for registration is: <b>%s</b>.</p>
+		<p>Please use this code to complete your registration process.</p>
+		<p>Have a great day!</p>
+	</body>
+</html>`
+
+const htmlBodyForPasswordReset = `<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Password Reset OTP Code</title>
+	</head>
+	<body>
+		<h1>Password Reset OTP Code</h1>
+		<p>You have requested to reset your password.</p>
+		<p>Your OTP code for password reset is: <b>%s</b>.</p>
+		<p>Please use this code to reset your password.</p>
+		<p>If you did not request this, please ignore this email.</p>
+		<p>Thank you!</p>
+	</body>
+</html>`

@@ -3,5 +3,6 @@ package service
 import "context"
 
 type MailService interface {
-	SendOtpCode(ctx context.Context, email, code string) error
+	SendConfirmationEmail(ctx context.Context, emailTo, code string) error
+	SendPasswordReset(ctx context.Context, emailTo, code string) error
 }
