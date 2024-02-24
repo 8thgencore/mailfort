@@ -2,7 +2,6 @@ package mail
 
 import (
 	"context"
-	"crypto/tls"
 	"fmt"
 	"log/slog"
 	"time"
@@ -25,7 +24,7 @@ func (s *MailService) SendConfirmationEmail(ctx context.Context, emailTo, code s
 	s.log.Info(fmt.Sprintf("Sending confirmation email to %s with code %s", emailTo, code))
 
 	if err := sendMail(*s.log, *s.cfg, emailTo, code, registrationType); err != nil {
-		return domain.ErrConflictingData
+		return domain.ErrFailedToSendEmail
 	}
 
 	s.log.Info("Email Sent")
@@ -39,7 +38,7 @@ func (s *MailService) SendPasswordReset(ctx context.Context, emailTo, code strin
 	s.log.Info(fmt.Sprintf("Sending confirmation email to %s with code %s", emailTo, code))
 
 	if err := sendMail(*s.log, *s.cfg, emailTo, code, resetPasswordType); err != nil {
-		return domain.ErrConflictingData
+		return domain.ErrFailedToSendEmail
 	}
 
 	s.log.Info("Email Sent")
@@ -68,7 +67,7 @@ func sendMail(log slog.Logger, cfg config.Mail, emailTo, code string, messageTyp
 
 	// Set TLSConfig to provide custom TLS configuration. For example,
 	// to skip TLS verification (useful for testing):
-	server.TLSConfig = &tls.Config{InsecureSkipVerify: true}
+	// server.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 
 	// SMTP client
 	smtpClient, err := server.Connect()
@@ -94,7 +93,7 @@ func sendMail(log slog.Logger, cfg config.Mail, emailTo, code string, messageTyp
 	// always check error after send
 	if message.Error != nil {
 		log.Error("Message have error", "error", message.Error)
-		return err
+		return message.Error
 	}
 
 	// Call Send and pass the client

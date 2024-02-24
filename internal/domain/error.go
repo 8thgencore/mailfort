@@ -40,7 +40,8 @@ var (
 	ErrUnauthorized = errors.New("user is unauthorized to access the resource")
 	// ErrForbidden is an error for when the user is forbidden to access the resource
 	ErrForbidden = errors.New("user is forbidden to access the resource")
-	// ErrDeleteOwnAccount is an error for when a user tries to delete their own account
+	// ErrFailedToSendEmail is an error for when sending an email fails
+	ErrFailedToSendEmail = errors.New("failed to send email")
 )
 
 // IsUniqueConstraintViolationError checks if the error is a unique constraint violation error
