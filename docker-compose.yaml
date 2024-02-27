@@ -7,6 +7,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8350:8080"
+      - "44350:44044"
     restart: unless-stopped
     environment:
       - CONFIG_PATH=./config/prod.yaml
