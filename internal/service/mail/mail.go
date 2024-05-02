@@ -21,7 +21,7 @@ var (
 // SendConfirmationEmail реализует метод интерфейса MailService для отправки письма с кодом подтверждения.
 func (s *MailService) SendConfirmationEmail(ctx context.Context, emailTo, code string) error {
 
-	s.log.Info(fmt.Sprintf("Sending confirmation email to %s with code %s", emailTo, code))
+	s.log.Info(fmt.Sprintf("Sending confirmation email to %s", emailTo))
 
 	if err := sendMail(*s.log, *s.cfg, emailTo, code, registrationType); err != nil {
 		return domain.ErrFailedToSendEmail
@@ -35,7 +35,7 @@ func (s *MailService) SendConfirmationEmail(ctx context.Context, emailTo, code s
 // SendPasswordReset реализует метод интерфейса MailService для отправки письма с кодом подтверждения.
 func (s *MailService) SendPasswordReset(ctx context.Context, emailTo, code string) error {
 
-	s.log.Info(fmt.Sprintf("Sending confirmation email to %s with code %s", emailTo, code))
+	s.log.Info(fmt.Sprintf("Sending confirmation email to %s", emailTo))
 
 	if err := sendMail(*s.log, *s.cfg, emailTo, code, resetPasswordType); err != nil {
 		return domain.ErrFailedToSendEmail
