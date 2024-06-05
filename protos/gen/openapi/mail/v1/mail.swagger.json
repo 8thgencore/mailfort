@@ -19,7 +19,7 @@
     "/v1/email-confirmation": {
       "post": {
         "summary": "Sends a confirmation email.",
-        "operationId": "SendConfirmationEmail",
+        "operationId": "SendConfirmationEmailOTPCode",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -53,7 +53,7 @@
     "/v1/password-reset": {
       "post": {
         "summary": "Sends a password reset email.",
-        "operationId": "SendPasswordResetEmail",
+        "operationId": "SendPasswordResetOTPCode",
         "responses": {
           "200": {
             "description": "A successful response.",

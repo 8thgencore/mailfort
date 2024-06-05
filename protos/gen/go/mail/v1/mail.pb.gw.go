@@ -31,7 +31,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_MailService_SendConfirmationEmail_0(ctx context.Context, marshaler runtime.Marshaler, client MailServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_MailService_SendConfirmationEmailOTPCode_0(ctx context.Context, marshaler runtime.Marshaler, client MailServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq SendEmailWithOTPCodeRequest
 	var metadata runtime.ServerMetadata
 
@@ -39,12 +39,12 @@ func request_MailService_SendConfirmationEmail_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.SendConfirmationEmail(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.SendConfirmationEmailOTPCode(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_MailService_SendConfirmationEmail_0(ctx context.Context, marshaler runtime.Marshaler, server MailServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_MailService_SendConfirmationEmailOTPCode_0(ctx context.Context, marshaler runtime.Marshaler, server MailServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq SendEmailWithOTPCodeRequest
 	var metadata runtime.ServerMetadata
 
@@ -52,12 +52,12 @@ func local_request_MailService_SendConfirmationEmail_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.SendConfirmationEmail(ctx, &protoReq)
+	msg, err := server.SendConfirmationEmailOTPCode(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_MailService_SendPasswordResetEmail_0(ctx context.Context, marshaler runtime.Marshaler, client MailServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_MailService_SendPasswordResetOTPCode_0(ctx context.Context, marshaler runtime.Marshaler, client MailServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq SendEmailWithOTPCodeRequest
 	var metadata runtime.ServerMetadata
 
@@ -65,12 +65,12 @@ func request_MailService_SendPasswordResetEmail_0(ctx context.Context, marshaler
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.SendPasswordResetEmail(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.SendPasswordResetOTPCode(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_MailService_SendPasswordResetEmail_0(ctx context.Context, marshaler runtime.Marshaler, server MailServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_MailService_SendPasswordResetOTPCode_0(ctx context.Context, marshaler runtime.Marshaler, server MailServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq SendEmailWithOTPCodeRequest
 	var metadata runtime.ServerMetadata
 
@@ -78,7 +78,7 @@ func local_request_MailService_SendPasswordResetEmail_0(ctx context.Context, mar
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.SendPasswordResetEmail(ctx, &protoReq)
+	msg, err := server.SendPasswordResetOTPCode(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -89,7 +89,7 @@ func local_request_MailService_SendPasswordResetEmail_0(ctx context.Context, mar
 // Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterMailServiceHandlerFromEndpoint instead.
 func RegisterMailServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server MailServiceServer) error {
 
-	mux.Handle("POST", pattern_MailService_SendConfirmationEmail_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_MailService_SendConfirmationEmailOTPCode_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -97,12 +97,12 @@ func RegisterMailServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/mail.v1.MailService/SendConfirmationEmail", runtime.WithHTTPPathPattern("/v1/email-confirmation"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/mail.v1.MailService/SendConfirmationEmailOTPCode", runtime.WithHTTPPathPattern("/v1/email-confirmation"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_MailService_SendConfirmationEmail_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_MailService_SendConfirmationEmailOTPCode_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -110,11 +110,11 @@ func RegisterMailServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 			return
 		}
 
-		forward_MailService_SendConfirmationEmail_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MailService_SendConfirmationEmailOTPCode_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_MailService_SendPasswordResetEmail_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_MailService_SendPasswordResetOTPCode_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -122,12 +122,12 @@ func RegisterMailServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/mail.v1.MailService/SendPasswordResetEmail", runtime.WithHTTPPathPattern("/v1/password-reset"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/mail.v1.MailService/SendPasswordResetOTPCode", runtime.WithHTTPPathPattern("/v1/password-reset"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_MailService_SendPasswordResetEmail_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_MailService_SendPasswordResetOTPCode_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -135,7 +135,7 @@ func RegisterMailServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 			return
 		}
 
-		forward_MailService_SendPasswordResetEmail_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MailService_SendPasswordResetOTPCode_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -180,47 +180,47 @@ func RegisterMailServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn
 // "MailServiceClient" to call the correct interceptors.
 func RegisterMailServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client MailServiceClient) error {
 
-	mux.Handle("POST", pattern_MailService_SendConfirmationEmail_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_MailService_SendConfirmationEmailOTPCode_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/mail.v1.MailService/SendConfirmationEmail", runtime.WithHTTPPathPattern("/v1/email-confirmation"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/mail.v1.MailService/SendConfirmationEmailOTPCode", runtime.WithHTTPPathPattern("/v1/email-confirmation"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_MailService_SendConfirmationEmail_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MailService_SendConfirmationEmailOTPCode_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_MailService_SendConfirmationEmail_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MailService_SendConfirmationEmailOTPCode_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_MailService_SendPasswordResetEmail_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_MailService_SendPasswordResetOTPCode_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/mail.v1.MailService/SendPasswordResetEmail", runtime.WithHTTPPathPattern("/v1/password-reset"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/mail.v1.MailService/SendPasswordResetOTPCode", runtime.WithHTTPPathPattern("/v1/password-reset"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_MailService_SendPasswordResetEmail_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MailService_SendPasswordResetOTPCode_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_MailService_SendPasswordResetEmail_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MailService_SendPasswordResetOTPCode_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -228,13 +228,13 @@ func RegisterMailServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 }
 
 var (
-	pattern_MailService_SendConfirmationEmail_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "email-confirmation"}, ""))
+	pattern_MailService_SendConfirmationEmailOTPCode_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "email-confirmation"}, ""))
 
-	pattern_MailService_SendPasswordResetEmail_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "password-reset"}, ""))
+	pattern_MailService_SendPasswordResetOTPCode_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "password-reset"}, ""))
 )
 
 var (
-	forward_MailService_SendConfirmationEmail_0 = runtime.ForwardResponseMessage
+	forward_MailService_SendConfirmationEmailOTPCode_0 = runtime.ForwardResponseMessage
 
-	forward_MailService_SendPasswordResetEmail_0 = runtime.ForwardResponseMessage
+	forward_MailService_SendPasswordResetOTPCode_0 = runtime.ForwardResponseMessage
 )

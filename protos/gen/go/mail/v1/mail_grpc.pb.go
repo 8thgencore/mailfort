@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	MailService_SendConfirmationEmail_FullMethodName  = "/mail.v1.MailService/SendConfirmationEmail"
-	MailService_SendPasswordResetEmail_FullMethodName = "/mail.v1.MailService/SendPasswordResetEmail"
+	MailService_SendConfirmationEmailOTPCode_FullMethodName = "/mail.v1.MailService/SendConfirmationEmailOTPCode"
+	MailService_SendPasswordResetOTPCode_FullMethodName     = "/mail.v1.MailService/SendPasswordResetOTPCode"
 )
 
 // MailServiceClient is the client API for MailService service.
@@ -28,9 +28,9 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MailServiceClient interface {
 	// Sends a confirmation email.
-	SendConfirmationEmail(ctx context.Context, in *SendEmailWithOTPCodeRequest, opts ...grpc.CallOption) (*Response, error)
+	SendConfirmationEmailOTPCode(ctx context.Context, in *SendEmailWithOTPCodeRequest, opts ...grpc.CallOption) (*Response, error)
 	// Sends a password reset email.
-	SendPasswordResetEmail(ctx context.Context, in *SendEmailWithOTPCodeRequest, opts ...grpc.CallOption) (*Response, error)
+	SendPasswordResetOTPCode(ctx context.Context, in *SendEmailWithOTPCodeRequest, opts ...grpc.CallOption) (*Response, error)
 }
 
 type mailServiceClient struct {
@@ -41,20 +41,20 @@ func NewMailServiceClient(cc grpc.ClientConnInterface) MailServiceClient {
 	return &mailServiceClient{cc}
 }
 
-func (c *mailServiceClient) SendConfirmationEmail(ctx context.Context, in *SendEmailWithOTPCodeRequest, opts ...grpc.CallOption) (*Response, error) {
+func (c *mailServiceClient) SendConfirmationEmailOTPCode(ctx context.Context, in *SendEmailWithOTPCodeRequest, opts ...grpc.CallOption) (*Response, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Response)
-	err := c.cc.Invoke(ctx, MailService_SendConfirmationEmail_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, MailService_SendConfirmationEmailOTPCode_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *mailServiceClient) SendPasswordResetEmail(ctx context.Context, in *SendEmailWithOTPCodeRequest, opts ...grpc.CallOption) (*Response, error) {
+func (c *mailServiceClient) SendPasswordResetOTPCode(ctx context.Context, in *SendEmailWithOTPCodeRequest, opts ...grpc.CallOption) (*Response, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Response)
-	err := c.cc.Invoke(ctx, MailService_SendPasswordResetEmail_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, MailService_SendPasswordResetOTPCode_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -66,9 +66,9 @@ func (c *mailServiceClient) SendPasswordResetEmail(ctx context.Context, in *Send
 // for forward compatibility
 type MailServiceServer interface {
 	// Sends a confirmation email.
-	SendConfirmationEmail(context.Context, *SendEmailWithOTPCodeRequest) (*Response, error)
+	SendConfirmationEmailOTPCode(context.Context, *SendEmailWithOTPCodeRequest) (*Response, error)
 	// Sends a password reset email.
-	SendPasswordResetEmail(context.Context, *SendEmailWithOTPCodeRequest) (*Response, error)
+	SendPasswordResetOTPCode(context.Context, *SendEmailWithOTPCodeRequest) (*Response, error)
 	mustEmbedUnimplementedMailServiceServer()
 }
 
@@ -76,11 +76,11 @@ type MailServiceServer interface {
 type UnimplementedMailServiceServer struct {
 }
 
-func (UnimplementedMailServiceServer) SendConfirmationEmail(context.Context, *SendEmailWithOTPCodeRequest) (*Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SendConfirmationEmail not implemented")
+func (UnimplementedMailServiceServer) SendConfirmationEmailOTPCode(context.Context, *SendEmailWithOTPCodeRequest) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendConfirmationEmailOTPCode not implemented")
 }
-func (UnimplementedMailServiceServer) SendPasswordResetEmail(context.Context, *SendEmailWithOTPCodeRequest) (*Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SendPasswordResetEmail not implemented")
+func (UnimplementedMailServiceServer) SendPasswordResetOTPCode(context.Context, *SendEmailWithOTPCodeRequest) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendPasswordResetOTPCode not implemented")
 }
 func (UnimplementedMailServiceServer) mustEmbedUnimplementedMailServiceServer() {}
 
@@ -95,38 +95,38 @@ func RegisterMailServiceServer(s grpc.ServiceRegistrar, srv MailServiceServer) {
 	s.RegisterService(&MailService_ServiceDesc, srv)
 }
 
-func _MailService_SendConfirmationEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MailService_SendConfirmationEmailOTPCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SendEmailWithOTPCodeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MailServiceServer).SendConfirmationEmail(ctx, in)
+		return srv.(MailServiceServer).SendConfirmationEmailOTPCode(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: MailService_SendConfirmationEmail_FullMethodName,
+		FullMethod: MailService_SendConfirmationEmailOTPCode_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MailServiceServer).SendConfirmationEmail(ctx, req.(*SendEmailWithOTPCodeRequest))
+		return srv.(MailServiceServer).SendConfirmationEmailOTPCode(ctx, req.(*SendEmailWithOTPCodeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _MailService_SendPasswordResetEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MailService_SendPasswordResetOTPCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SendEmailWithOTPCodeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MailServiceServer).SendPasswordResetEmail(ctx, in)
+		return srv.(MailServiceServer).SendPasswordResetOTPCode(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: MailService_SendPasswordResetEmail_FullMethodName,
+		FullMethod: MailService_SendPasswordResetOTPCode_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MailServiceServer).SendPasswordResetEmail(ctx, req.(*SendEmailWithOTPCodeRequest))
+		return srv.(MailServiceServer).SendPasswordResetOTPCode(ctx, req.(*SendEmailWithOTPCodeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -139,12 +139,12 @@ var MailService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*MailServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "SendConfirmationEmail",
-			Handler:    _MailService_SendConfirmationEmail_Handler,
+			MethodName: "SendConfirmationEmailOTPCode",
+			Handler:    _MailService_SendConfirmationEmailOTPCode_Handler,
 		},
 		{
-			MethodName: "SendPasswordResetEmail",
-			Handler:    _MailService_SendPasswordResetEmail_Handler,
+			MethodName: "SendPasswordResetOTPCode",
+			Handler:    _MailService_SendPasswordResetOTPCode_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

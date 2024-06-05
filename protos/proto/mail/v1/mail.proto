@@ -25,16 +25,16 @@ message ErrorResponse {
 }
 
 service MailService {
-    // Sends a confirmation email.
-    rpc SendConfirmationEmail(SendEmailWithOTPCodeRequest) returns (Response) {
+    // Sends a confirmation email otp code.
+    rpc SendConfirmationEmailOTPCode(SendEmailWithOTPCodeRequest) returns (Response) {
         option (google.api.http) = {
             post: "/v1/email-confirmation"
             body: "*"
         };
     }
 
-    // Sends a password reset email.
-    rpc SendPasswordResetEmail(SendEmailWithOTPCodeRequest) returns (Response) {
+    // Sends a password reset otp code.
+    rpc SendPasswordResetOTPCode(SendEmailWithOTPCodeRequest) returns (Response) {
         option (google.api.http) = {
             post: "/v1/password-reset"
             body: "*"
