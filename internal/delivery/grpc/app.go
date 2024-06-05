@@ -2,11 +2,13 @@ package grpc
 
 import (
 	"fmt"
-	"log/slog"
 	"net"
 
-	"github.com/8thgencore/mailfort/internal/delivery/grpc/mail"
+	"log/slog"
+
+	"github.com/8thgencore/mailfort/internal/delivery/handler"
 	"github.com/8thgencore/mailfort/internal/service"
+	mailpb "github.com/8thgencore/mailfort/protos/gen/go/mail/v1"
 	"google.golang.org/grpc"
 )
 
@@ -24,7 +26,9 @@ func New(
 ) *App {
 	gRPCServer := grpc.NewServer()
 
-	mail.Register(gRPCServer, mailService)
+	// Create a new MailServiceServer instance
+	mailHandler := handler.NewMailServiceServer(mailService)
+	mailpb.RegisterMailServiceServer(gRPCServer, mailHandler)
 
 	return &App{
 		log:        log,
@@ -41,7 +45,7 @@ func (a *App) MustRun() {
 }
 
 func (a *App) Run() error {
-	const op = "grpcapp.Run"
+	const op = "delivery.grpc.app.Run"
 
 	log := a.log.With(
 		slog.String("op", op),

@@ -1,35 +1,19 @@
 package app
 
 import (
-	"fmt"
 	"log"
 	"log/slog"
 	"os"
 	"os/signal"
 	"syscall"
 
-	_ "github.com/8thgencore/mailfort/docs"
-	"github.com/8thgencore/mailfort/internal/app/grpc"
 	"github.com/8thgencore/mailfort/internal/config"
+	"github.com/8thgencore/mailfort/internal/delivery/grpc"
 	"github.com/8thgencore/mailfort/internal/delivery/http"
 	mailService "github.com/8thgencore/mailfort/internal/service/mail"
 	"github.com/8thgencore/mailfort/pkg/logger/slogpretty"
 )
 
-// @title			MailFort API
-// @version		1.0
-// @description	MailFort API is a service for handling email-related operations.
-//
-// @contact.name	Tom Jerry
-// @contact.url	https://github.com/8thgencore/mailfort
-// @contact.email	test@gmail.com
-//
-// @license.name	MIT
-// @license.url	https://opensource.org/licenses/MIT
-//
-// @host			api.example.com
-// @BasePath		/v1
-// @schemes		http https
 func Run(configPath string) {
 	// Load configuration
 	cfg, err := config.NewConfig(configPath)
@@ -46,32 +30,14 @@ func Run(configPath string) {
 
 	// Dependency injection
 	mailService := mailService.NewMailService(log, &cfg.Mail)
-	mailHandler := http.NewMailHandler(mailService)
 
-	// Init router
-	router, err := http.NewRouter(log, cfg, *mailHandler)
-	if err != nil {
-		log.Error("Error initializing router", "error", err.Error())
-		os.Exit(1)
-	}
-
-	// Start REST API server
-	listenAddr := fmt.Sprintf("%s:%s", cfg.HTTP.Host, cfg.HTTP.Port)
-
-	log.Info("Starting the HTTP server", "listen_address", listenAddr)
-
-	go func() {
-		err = router.Serve(listenAddr)
-		if err != nil {
-			log.Error("Error starting the HTTP server", "error", err.Error())
-			os.Exit(1)
-		}
-	}()
-
-	// Start gRPC API Server
+	// // Start gRPC API Server
 	grpcApp := grpc.New(log, mailService, cfg.GRPC.Port)
-
 	go grpcApp.MustRun()
+
+	// Start the HTTP server with gRPC-Gateway
+	httpApp := http.New(log, mailService, cfg.HTTP.Port, cfg.GRPC.Port)
+	go httpApp.MustRun()
 
 	// Graceful shutdown
 	stop := make(chan os.Signal, 1)

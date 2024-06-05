@@ -19,9 +19,10 @@ tasks:
     desc: "Install dependencies"
     cmds:
       - go install github.com/go-task/task/v3/cmd/task@latest
-      - go install github.com/cosmtrek/air@latest
+      - go install github.com/air-verse/air@latest
       - go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
       - go install github.com/swaggo/swag/cmd/swag@latest
+      - go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
 
   service:up:
     desc: "Start services"
@@ -62,4 +63,12 @@ tasks:
   proto:gen:
     desc: "Generate proto file"
     cmds:
-      - protoc -I proto proto/mail/*.proto --go_out=./gen/go --go_opt=paths=source_relative --go-grpc_out=./gen/go --go-grpc_opt=paths=source_relative
+      - |
+        cd protos && \
+        protoc \
+        --go_out=paths=source_relative:./gen/go \
+        --go-grpc_out=paths=source_relative:./gen/go \
+        --grpc-gateway_out=paths=source_relative:./gen/go \
+        --openapiv2_out=logtostderr=true,json_names_for_fields=false,simple_operation_ids=true:./gen/openapi \
+        -I proto \
+        ./proto/mail/v1/mail.proto
