@@ -18,8 +18,8 @@ func NewMailServiceServer(svc service.MailService) *MailServiceServer {
 	return &MailServiceServer{svc: svc}
 }
 
-// SendConfirmationEmail handles sending a confirmation email.
-func (s *MailServiceServer) SendConfirmationEmail(ctx context.Context, req *mailpb.SendEmailWithOTPCodeRequest) (*mailpb.Response, error) {
+// SendConfirmationEmailOTPCode handles sending a confirmation email.
+func (s *MailServiceServer) SendConfirmationEmailOTPCode(ctx context.Context, req *mailpb.SendEmailWithOTPCodeRequest) (*mailpb.Response, error) {
 	err := s.svc.SendConfirmationEmail(ctx, req.Email, req.OtpCode)
 	if err != nil {
 		return &mailpb.Response{Message: err.Error(), Success: false}, err
@@ -27,8 +27,8 @@ func (s *MailServiceServer) SendConfirmationEmail(ctx context.Context, req *mail
 	return &mailpb.Response{Message: "Success", Success: true}, nil
 }
 
-// SendPasswordResetEmail handles sending a password reset email.
-func (s *MailServiceServer) SendPasswordResetEmail(ctx context.Context, req *mailpb.SendEmailWithOTPCodeRequest) (*mailpb.Response, error) {
+// SendPasswordResetOTPCode handles sending a password reset email.
+func (s *MailServiceServer) SendPasswordResetOTPCode(ctx context.Context, req *mailpb.SendEmailWithOTPCodeRequest) (*mailpb.Response, error) {
 	err := s.svc.SendPasswordReset(ctx, req.Email, req.OtpCode)
 	if err != nil {
 		return &mailpb.Response{Message: err.Error(), Success: false}, err

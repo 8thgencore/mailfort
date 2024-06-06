@@ -27,9 +27,9 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MailServiceClient interface {
-	// Sends a confirmation email.
+	// Sends a confirmation email otp code.
 	SendConfirmationEmailOTPCode(ctx context.Context, in *SendEmailWithOTPCodeRequest, opts ...grpc.CallOption) (*Response, error)
-	// Sends a password reset email.
+	// Sends a password reset otp code.
 	SendPasswordResetOTPCode(ctx context.Context, in *SendEmailWithOTPCodeRequest, opts ...grpc.CallOption) (*Response, error)
 }
 
@@ -65,9 +65,9 @@ func (c *mailServiceClient) SendPasswordResetOTPCode(ctx context.Context, in *Se
 // All implementations must embed UnimplementedMailServiceServer
 // for forward compatibility
 type MailServiceServer interface {
-	// Sends a confirmation email.
+	// Sends a confirmation email otp code.
 	SendConfirmationEmailOTPCode(context.Context, *SendEmailWithOTPCodeRequest) (*Response, error)
-	// Sends a password reset email.
+	// Sends a password reset otp code.
 	SendPasswordResetOTPCode(context.Context, *SendEmailWithOTPCodeRequest) (*Response, error)
 	mustEmbedUnimplementedMailServiceServer()
 }

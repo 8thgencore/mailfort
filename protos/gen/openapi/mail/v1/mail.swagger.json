@@ -18,7 +18,7 @@
   "paths": {
     "/v1/email-confirmation": {
       "post": {
-        "summary": "Sends a confirmation email.",
+        "summary": "Sends a confirmation email otp code.",
         "operationId": "SendConfirmationEmailOTPCode",
         "responses": {
           "200": {
@@ -52,7 +52,7 @@
     },
     "/v1/password-reset": {
       "post": {
-        "summary": "Sends a password reset email.",
+        "summary": "Sends a password reset otp code.",
         "operationId": "SendPasswordResetOTPCode",
         "responses": {
           "200": {
