@@ -2,10 +2,6 @@
 
 version: "3"
 
-vars:
-  DBML_FILE: "./schema.dbml"
-  DSN: "{{.DB_CONNECTION}}://{{.DB_USER}}:{{.DB_PASSWORD}}@{{.DB_HOST}}:{{.DB_PORT}}/{{.DB_NAME}}?sslmode=disable"
-
 dotenv:
   - ".env"
 
@@ -53,12 +49,6 @@ tasks:
     requires:
       vars:
         - APP_NAME
-
-  swag:
-    desc: "Generate swagger documentation"
-    cmds:
-      - swag fmt
-      - swag init -g ./internal/app/app.go  -o ./docs --parseInternal true
 
   proto:gen:
     desc: "Generate proto file"

@@ -11,7 +11,9 @@ To run the MailFort service, follow these steps:
 export CONFIG_PATH=./config/local.yaml
 ```
 
-3. **Run in development mode:** Start the MailFort service in development mode using the task command:
+3. **Add credential for mail client:** Create file `.env` and write parameters.
+
+4. **Run in development mode:** Start the MailFort service in development mode using the task command:
 ```bash
 task dev
 ```

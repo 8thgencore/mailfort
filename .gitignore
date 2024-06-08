@@ -32,5 +32,3 @@ tmp/
 *.out
 *.test
 
-# exclude prod yaml
-prod.yaml

@@ -49,10 +49,10 @@ type (
 
 	// Mail contains all the environment variables for the mail client
 	Mail struct {
-		Host     string `env-required:"true" yaml:"host"     env:"MAIL_HOST"`
-		Port     int    `env-required:"true" yaml:"port"     env:"MAIL_PORT"`
-		Username string `env-required:"true" yaml:"username" env:"MAIL_USERNAME"`
-		Password string `env-required:"true" yaml:"password" env:"MAIL_PASSWORD"`
+		Host     string `yaml:"host"     env:"MAIL_HOST"`
+		Port     int    `yaml:"port"     env:"MAIL_PORT"`
+		Username string `yaml:"username" env:"MAIL_USERNAME"`
+		Password string `yaml:"password" env:"MAIL_PASSWORD"`
 	}
 
 	// Logger settings

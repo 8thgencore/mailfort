@@ -1,4 +1,4 @@
-env: "local" # local, dev, prod
+env: "prod" # local, dev, prod
 
 app:
   name: "mailfort"
@@ -16,9 +16,5 @@ grpc:
 log:
   slog:
     add_source: true
-    level: "debug"
-    format: "pretty"
-    pretty:
-      fields_format: "json"
-      emoji: true
-      # time_layout: "15:04:05.000000"
+    level: "info"
+    format: "json"

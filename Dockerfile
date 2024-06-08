@@ -1,12 +1,12 @@
+#############################
 # Use the official Golang image as the base image
-FROM golang:1.22
+FROM golang:1.22 AS builder
 
 # Set the working directory inside the container
 WORKDIR /app
 
 # Copy the Go module and Go sum files
-COPY go.mod .
-COPY go.sum .
+COPY go.mod go.sum ./
 
 # Download dependencies
 RUN go mod download
@@ -15,10 +15,22 @@ RUN go mod download
 COPY . .
 
 # Build the Go application
-RUN go build -o mailfort ./cmd/app/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o /app/bin/app ./cmd/app/main.go
 
-# Expose the port that the application will run on
-EXPOSE 8080
+#############################
+# Use the official Alpine image as the base image
+FROM alpine:latest
+
+# Set the working directory inside the container
+WORKDIR /root
+
+# Copy from builder stage
+COPY --from=builder /app/bin/app .
+COPY --from=builder /app/config /root/config
+COPY --from=builder /app/.env /root/.env
+
+# Set the timezone and install CA certificates
+RUN apk --no-cache add ca-certificates tzdata
 
 # Command to run the application
-CMD ["./mailfort"]
+CMD ["./app"]

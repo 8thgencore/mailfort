@@ -29,7 +29,7 @@ docker-compose*.yaml
 **/*_test.go
 Makefile
 .*ignore
-*.env
+# *.env
 *.log
 *.md
 *.out

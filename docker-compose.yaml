@@ -5,9 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - "8350:8080"
       - "44350:44044"
-    restart: unless-stopped
+    env_file:
+      - .env
     environment:
       - CONFIG_PATH=./config/prod.yaml
