@@ -26,9 +26,6 @@ jobs:
             docker stop mailfort_container || true
             docker rm mailfort_container || true
 
-            # Copy the prod configuration prod.yaml on the server
-            scp -o StrictHostKeyChecking=no ./config/prod.yaml ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:./config/
-
             # We invite the docker manager with suggestions for a change of environment and high-tech constrictions
             docker run -d -p 8350:8080 --name mailfort_container \
               -e MAIL_HOST="${{ secrets.MAIL_HOST }}" \
