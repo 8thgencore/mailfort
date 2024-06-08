@@ -20,4 +20,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           script: |
             docker pull ${{ secrets.DOCKER_USERNAME }}/mailfort:latest
-            docker compose -f docker-compose.yaml up -d
+            docker stop mailfort_container || true
+            docker rm mailfort_container || true
+            export CONFIG_PATH=./config/prod.yaml
+            docker run -d -p 8350:8080 --name mailfort_container ${{ secrets.DOCKER_USERNAME }}/mailfort:latest
