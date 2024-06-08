@@ -22,5 +22,5 @@ jobs:
             docker pull ${{ secrets.DOCKER_USERNAME }}/mailfort:latest
             docker stop mailfort_container || true
             docker rm mailfort_container || true
-            scp -o StrictHostKeyChecking=no ./config/prod.yaml ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/path/to/your/config/
-            docker run -d -p 8350:8080 --name mailfort_container -e CONFIG_PATH=/path/to/your/config/prod.yaml ${{ secrets.DOCKER_USERNAME }}/mailfort:latest
+            scp -o StrictHostKeyChecking=no ./config/prod.yaml ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:./config/
+            docker run -d -p 8350:8080 --name mailfort_container -e CONFIG_PATH=./config/prod.yaml ${{ secrets.DOCKER_USERNAME }}/mailfort:latest
