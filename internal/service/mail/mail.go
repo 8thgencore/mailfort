@@ -70,6 +70,7 @@ func sendMail(log slog.Logger, cfg config.Mail, emailTo, code string, messageTyp
 	// server.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 
 	// SMTP client
+	log.Info("Connecting to SMTP server", "host", server.Host)
 	smtpClient, err := server.Connect()
 
 	if err != nil {
