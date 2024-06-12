@@ -32,5 +32,8 @@ COPY --from=builder /app/.env /root/.env
 # Set the timezone and install CA certificates
 RUN apk --no-cache add ca-certificates tzdata
 
+# Setting the CONFIG_PATH environment variable
+ENV CONFIG_PATH=./config/prod.yaml
+
 # Command to run the application
 CMD ["./app"]

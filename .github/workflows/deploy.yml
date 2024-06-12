@@ -27,10 +27,9 @@ jobs:
             docker rm mailfort_container || true
 
             # We invite the docker manager with suggestions for a change of environment and high-tech constrictions
-            docker run -d -p 8350:8080 --name mailfort_container \
+            docker run -d -p 8350:8080 -p 44350:44044 --name mailfort_container \
               -e MAIL_HOST="${{ secrets.MAIL_HOST }}" \
               -e MAIL_PORT="${{ secrets.MAIL_PORT }}" \
               -e MAIL_USERNAME="${{ secrets.MAIL_USERNAME }}" \
               -e MAIL_PASSWORD="${{ secrets.MAIL_PASSWORD }}" \
-              -e CONFIG_PATH=./config/prod.yaml \
               ${{ secrets.DOCKER_USERNAME }}/mailfort:latest
