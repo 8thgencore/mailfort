@@ -6,7 +6,7 @@ import (
 
 	"log/slog"
 
-	"github.com/8thgencore/mailfort/internal/delivery/handler"
+	"github.com/8thgencore/mailfort/internal/delivery"
 	"github.com/8thgencore/mailfort/internal/service"
 	mailpb "github.com/8thgencore/mailfort/protos/gen/go/mail/v1"
 	"google.golang.org/grpc"

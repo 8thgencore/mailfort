@@ -8,8 +8,8 @@ import (
 	"syscall"
 
 	"github.com/8thgencore/mailfort/internal/config"
-	"github.com/8thgencore/mailfort/internal/delivery/grpc"
-	"github.com/8thgencore/mailfort/internal/delivery/http"
+	"github.com/8thgencore/mailfort/internal/server/grpc"
+	"github.com/8thgencore/mailfort/internal/server/http"
 	mailService "github.com/8thgencore/mailfort/internal/service/mail"
 	"github.com/8thgencore/mailfort/pkg/logger/slogpretty"
 )
